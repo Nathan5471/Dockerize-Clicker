@@ -1,5 +1,3 @@
-import DockerizeSticker from "./assets/orph-docker-sticker.svg?react";
-
 function App() {
   return (
     <>
@@ -9,10 +7,11 @@ function App() {
         </div>
         <div className="flex flex-row w-screen h-[calc(90%)]">
           <div className="flex flex-col w-3/4 items-center justify-center">
-            <div className="flex w-1/2 h-2/3 bg-primary-a1 rounded-lg items-center justify-center">
-              <DockerizeSticker
+            <div className="flex w-1/2 aspect-1 bg-primary-a1 rounded-lg items-center justify-center">
+              <img
+                src={"/public/dockerize-sticker.png"}
+                alt="Dockerize Sticker"
                 onClick={() => console.log("Docker Sticker Clicked!")}
-                style={{ pointerEvents: "auto" }}
                 className="w-5/6 h-5/6 hover:scale-105 transition-transform duration-300 cursor-pointer"
               />
             </div>
