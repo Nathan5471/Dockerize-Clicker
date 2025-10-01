@@ -3,12 +3,18 @@ import { useContainer } from "./contexts/containerContext";
 import {
   clickSticker,
   purchaseDockerfile,
+  purchaseDockerRunCommand,
   purchaseDockerComposeFile,
 } from "./utils/containerManager";
 
 function App() {
-  const { containers, dockerfiles, dockerComposeFiles, refreshValues } =
-    useContainer();
+  const {
+    containers,
+    dockerfiles,
+    dockerRunCommands,
+    dockerComposeFiles,
+    refreshValues,
+  } = useContainer();
   const [clicked, setClicked] = useState(false);
 
   const handleStickerClick = () => {
@@ -21,6 +27,14 @@ function App() {
 
   const handlePurchaseDockerfile = () => {
     const result = purchaseDockerfile(1);
+    if (result && !result.success) {
+      alert(result.message);
+    }
+    refreshValues();
+  };
+
+  const handlePurchaseDockerRunCommand = () => {
+    const result = purchaseDockerRunCommand(1);
     if (result && !result.success) {
       alert(result.message);
     }
@@ -78,6 +92,22 @@ function App() {
                   </p>
                 </button>
                 <button
+                  onClick={handlePurchaseDockerRunCommand}
+                  className="w-11/12 bg-primary-a2 hover:scale-105 transition-transform duration-200 p-2 rounded-lg mt-2"
+                >
+                  <h3 className="text-lg font-bold">
+                    Purchase Docker Run Command ({dockerRunCommands})
+                  </h3>
+                  <p className="text-left">
+                    A Docker Run command lets you run a single container easily.
+                    Get 5 more containers per click.
+                  </p>
+                  <p className="text-left font-bold">
+                    Cost: {Math.floor(100 * Math.pow(1.65, dockerRunCommands))}{" "}
+                    Containers
+                  </p>
+                </button>
+                <button
                   onClick={handlePurchaseDockerComposeFile}
                   className="w-11/12 bg-primary-a2 hover:scale-105 transition-transform duration-200 p-2 rounded-lg mt-2"
                 >
@@ -86,10 +116,10 @@ function App() {
                   </h3>
                   <p className="text-left">
                     A Docker Compose file helps you manage multi-container
-                    deployments. Get 5 more containers per click.
+                    deployments. Get 30 more containers per click.
                   </p>
                   <p className="text-left font-bold">
-                    Cost: {Math.floor(400 * Math.pow(1.65, dockerComposeFiles))}{" "}
+                    Cost: {Math.floor(750 * Math.pow(1.65, dockerComposeFiles))}{" "}
                     Containers
                   </p>
                 </button>

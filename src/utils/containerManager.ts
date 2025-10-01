@@ -54,13 +54,40 @@ export const purchaseDockerfile = (amount: number) => {
   return { success: true };
 };
 
+export const getAmountOfDockerRunCommands = () => {
+  const dockerRunCommands = localStorage.getItem("dockerRunCommands");
+  return dockerRunCommands ? JSON.parse(dockerRunCommands) : 0;
+};
+
+export const purchaseDockerRunCommand = (amount: number) => {
+  const baseCost = 100;
+  const amountOfDockerRunCommands = getAmountOfDockerRunCommands();
+  let cost = 0;
+  for (let i = 0; i < amount; i++) {
+    cost += Math.floor(
+      baseCost * Math.pow(1.65, amountOfDockerRunCommands + i)
+    );
+  }
+  const currentContainers = getContainers();
+  if (currentContainers < cost) {
+    return { success: false, message: "Not enough containers" };
+  }
+  updateContainers(-cost);
+  localStorage.setItem(
+    "dockerRunCommands",
+    JSON.stringify(amountOfDockerRunCommands + amount)
+  );
+  increaseAmountPerClick(amount * 5);
+  return { success: true };
+};
+
 export const getAmountOfDockerComposeFiles = () => {
   const dockerComposeFiles = localStorage.getItem("dockerComposeFiles");
   return dockerComposeFiles ? JSON.parse(dockerComposeFiles) : 0;
 };
 
 export const purchaseDockerComposeFile = (amount: number) => {
-  const baseCost = 400;
+  const baseCost = 750;
   const amountOfDockerFiles = getAmountOfDockerComposeFiles();
   let cost = 0;
   for (let i = 0; i < amount; i++) {
@@ -75,6 +102,6 @@ export const purchaseDockerComposeFile = (amount: number) => {
     "dockerComposeFiles",
     JSON.stringify(amountOfDockerFiles + amount)
   );
-  increaseAmountPerClick(amount * 5);
+  increaseAmountPerClick(amount * 30);
   return { success: true };
 };
