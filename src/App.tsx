@@ -1,9 +1,14 @@
 import { useState } from "react";
 import { useContainer } from "./contexts/containerContext";
-import { clickSticker, purchaseDockerfile } from "./utils/containerManager";
+import {
+  clickSticker,
+  purchaseDockerfile,
+  purchaseDockerComposeFile,
+} from "./utils/containerManager";
 
 function App() {
-  const { containers, dockerfiles, refreshValues } = useContainer();
+  const { containers, dockerfiles, dockerComposeFiles, refreshValues } =
+    useContainer();
   const [clicked, setClicked] = useState(false);
 
   const handleStickerClick = () => {
@@ -16,6 +21,14 @@ function App() {
 
   const handlePurchaseDockerfile = () => {
     const result = purchaseDockerfile(1);
+    if (result && !result.success) {
+      alert(result.message);
+    }
+    refreshValues();
+  };
+
+  const handlePurchaseDockerComposeFile = () => {
+    const result = purchaseDockerComposeFile(1);
     if (result && !result.success) {
       alert(result.message);
     }
@@ -50,7 +63,7 @@ function App() {
               <div className="flex flex-col w-full h-full items-center overflow-y-auto">
                 <button
                   onClick={handlePurchaseDockerfile}
-                  className="w-5/6 bg-primary-a2 hover:scale-105 transition-transform duration-200 p-2 rounded-lg mt-2"
+                  className="w-11/12 bg-primary-a2 hover:scale-105 transition-transform duration-200 p-2 rounded-lg mt-2"
                 >
                   <h3 className="text-xl font-bold">
                     Purchase Dockerfile ({dockerfiles})
@@ -61,6 +74,22 @@ function App() {
                   </p>
                   <p className="text-left font-bold">
                     Cost: {Math.floor(25 * Math.pow(1.65, dockerfiles))}{" "}
+                    Containers
+                  </p>
+                </button>
+                <button
+                  onClick={handlePurchaseDockerComposeFile}
+                  className="w-11/12 bg-primary-a2 hover:scale-105 transition-transform duration-200 p-2 rounded-lg mt-2"
+                >
+                  <h3 className="text-lg font-bold">
+                    Purchase Docker Compose File ({dockerComposeFiles})
+                  </h3>
+                  <p className="text-left">
+                    A Docker Compose file helps you manage multi-container
+                    deployments. Get 5 more containers per click.
+                  </p>
+                  <p className="text-left font-bold">
+                    Cost: {Math.floor(400 * Math.pow(1.65, dockerComposeFiles))}{" "}
                     Containers
                   </p>
                 </button>

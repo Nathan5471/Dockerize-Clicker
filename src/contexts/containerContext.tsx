@@ -2,11 +2,13 @@ import { createContext, useState, useContext } from "react";
 import {
   getContainers,
   getAmountOfDockerfiles,
+  getAmountOfDockerComposeFiles,
 } from "../utils/containerManager";
 
 interface ContainerContextType {
   containers: number;
   dockerfiles: number;
+  dockerComposeFiles: number;
   refreshValues: () => void;
 }
 
@@ -21,15 +23,20 @@ export const ContainerProvider: React.FC<{ children: React.ReactNode }> = ({
   const [dockerfiles, setDockerfiles] = useState<number>(
     getAmountOfDockerfiles()
   );
+  const [dockerComposeFiles, setDockerComposeFiles] = useState<number>(
+    getAmountOfDockerComposeFiles()
+  );
 
   const refreshValues = () => {
     setContainers(getContainers());
     setDockerfiles(getAmountOfDockerfiles());
+    setDockerComposeFiles(getAmountOfDockerComposeFiles());
   };
 
   const contextValue = {
     containers,
     dockerfiles,
+    dockerComposeFiles,
     refreshValues,
   };
 

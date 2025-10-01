@@ -51,4 +51,30 @@ export const purchaseDockerfile = (amount: number) => {
     JSON.stringify(amountOfDockerFiles + amount)
   );
   increaseAmountPerClick(amount);
+  return { success: true };
+};
+
+export const getAmountOfDockerComposeFiles = () => {
+  const dockerComposeFiles = localStorage.getItem("dockerComposeFiles");
+  return dockerComposeFiles ? JSON.parse(dockerComposeFiles) : 0;
+};
+
+export const purchaseDockerComposeFile = (amount: number) => {
+  const baseCost = 400;
+  const amountOfDockerFiles = getAmountOfDockerComposeFiles();
+  let cost = 0;
+  for (let i = 0; i < amount; i++) {
+    cost += Math.floor(baseCost * Math.pow(1.65, amountOfDockerFiles + i));
+  }
+  const currentContainers = getContainers();
+  if (currentContainers < cost) {
+    return { success: false, message: "Not enough containers" };
+  }
+  updateContainers(-cost);
+  localStorage.setItem(
+    "dockerComposeFiles",
+    JSON.stringify(amountOfDockerFiles + amount)
+  );
+  increaseAmountPerClick(amount * 5);
+  return { success: true };
 };
