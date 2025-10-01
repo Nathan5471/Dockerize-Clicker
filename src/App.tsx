@@ -1,10 +1,15 @@
+import { useState } from "react";
 import { useContainer } from "./contexts/containerContext";
 import { clickSticker, purchaseDockerfile } from "./utils/containerManager";
 
 function App() {
   const { containers, dockerfiles, refreshValues } = useContainer();
+  const [clicked, setClicked] = useState(false);
 
   const handleStickerClick = () => {
+    if (clicked) setClicked(false);
+    setClicked(true);
+    setTimeout(() => setClicked(false), 125);
     clickSticker();
     refreshValues();
   };
@@ -30,7 +35,9 @@ function App() {
                 src={"/dockerize-sticker.png"}
                 alt="Dockerize Sticker"
                 onClick={handleStickerClick}
-                className="w-5/6 h-auto hover:scale-105 transition-transform duration-300 cursor-pointer"
+                className={`w-5/6 h-auto  transition-transform duration-300 cursor-pointer ${
+                  clicked ? "scale-95" : "hover:scale-105"
+                }`}
               />
             </div>
           </div>
