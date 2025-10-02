@@ -105,3 +105,50 @@ export const purchaseDockerComposeFile = (amount: number) => {
   increaseAmountPerClick(amount * 30);
   return { success: true };
 };
+
+export const getContainersPerSecond = () => {
+  const containersPerSecond = localStorage.getItem("containersPerSecond");
+  return containersPerSecond ? JSON.parse(containersPerSecond) : 0;
+};
+
+const increaseContainersPerSecond = (amount: number) => {
+  const currentContainersPerSecond = getContainersPerSecond();
+  const newContainersPerSecond = currentContainersPerSecond + amount;
+  localStorage.setItem(
+    "containersPerSecond",
+    JSON.stringify(newContainersPerSecond)
+  );
+  return newContainersPerSecond;
+};
+
+export const tickContainersPerSecond = () => {
+  const containersPerSecond = getContainersPerSecond();
+  return updateContainers(containersPerSecond);
+};
+
+export const getAmountOfRaspberryPiZero2Ws = () => {
+  const raspberryPiZero2Ws = localStorage.getItem("raspberryPiZero2Ws");
+  return raspberryPiZero2Ws ? JSON.parse(raspberryPiZero2Ws) : 0;
+};
+
+export const purchaseRaspberryPiZero2W = (amount: number) => {
+  const baseCost = 5000;
+  const amountOfRaspberryPiZerosWs = getAmountOfRaspberryPiZero2Ws();
+  let cost = 0;
+  for (let i = 0; i < amount; i++) {
+    cost += Math.floor(
+      baseCost * Math.pow(1.65, amountOfRaspberryPiZerosWs + i)
+    );
+  }
+  const currentContainers = getContainers();
+  if (currentContainers < cost) {
+    return { success: false, message: "Not enough containers" };
+  }
+  updateContainers(-cost);
+  localStorage.setItem(
+    "raspberryPiZero2Ws",
+    JSON.stringify(amountOfRaspberryPiZerosWs + amount)
+  );
+  increaseContainersPerSecond(amount * 10);
+  return { success: true };
+};

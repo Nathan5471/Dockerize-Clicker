@@ -5,6 +5,7 @@ import {
   purchaseDockerfile,
   purchaseDockerRunCommand,
   purchaseDockerComposeFile,
+  purchaseRaspberryPiZero2W,
 } from "./utils/containerManager";
 
 function App() {
@@ -13,6 +14,7 @@ function App() {
     dockerfiles,
     dockerRunCommands,
     dockerComposeFiles,
+    raspberryPiZero2Ws,
     refreshValues,
   } = useContainer();
   const [clicked, setClicked] = useState(false);
@@ -43,6 +45,14 @@ function App() {
 
   const handlePurchaseDockerComposeFile = () => {
     const result = purchaseDockerComposeFile(1);
+    if (result && !result.success) {
+      alert(result.message);
+    }
+    refreshValues();
+  };
+
+  const handlePurchaseRaspberryPiZero2W = () => {
+    const result = purchaseRaspberryPiZero2W(1);
     if (result && !result.success) {
       alert(result.message);
     }
@@ -120,6 +130,24 @@ function App() {
                   </p>
                   <p className="text-left font-bold">
                     Cost: {Math.floor(750 * Math.pow(1.65, dockerComposeFiles))}{" "}
+                    Containers
+                  </p>
+                </button>
+                <button
+                  onClick={handlePurchaseRaspberryPiZero2W}
+                  className="w-11/12 bg-primary-a2 hover:scale-105 transition-transform duration-200 p-2 rounded-lg mt-2 mb-4"
+                >
+                  <h3 className="text-lg font-bold">
+                    Purchase Raspberry Pi Zero 2W ({raspberryPiZero2Ws})
+                  </h3>
+                  <p className="text-left">
+                    The Raspberry Pi Zero 2W is a tiny, and extremely affordable
+                    (only $15!) computer that you can use to run Docker. Get 10
+                    containers per second.
+                  </p>
+                  <p className="text-left font-bold">
+                    Cost:{" "}
+                    {Math.floor(5000 * Math.pow(1.65, raspberryPiZero2Ws))}{" "}
                     Containers
                   </p>
                 </button>

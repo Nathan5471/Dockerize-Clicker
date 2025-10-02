@@ -1,16 +1,21 @@
-import { createContext, useState, useContext } from "react";
+import { createContext, useState, useContext, useEffect } from "react";
 import {
   getContainers,
   getAmountOfDockerfiles,
   getAmountOfDockerRunCommands,
   getAmountOfDockerComposeFiles,
+  getContainersPerSecond,
+  tickContainersPerSecond,
+  getAmountOfRaspberryPiZero2Ws,
 } from "../utils/containerManager";
 
 interface ContainerContextType {
   containers: number;
+  containersPerSecond: number;
   dockerfiles: number;
   dockerRunCommands: number;
   dockerComposeFiles: number;
+  raspberryPiZero2Ws: number;
   refreshValues: () => void;
 }
 
@@ -22,6 +27,9 @@ export const ContainerProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const [containers, setContainers] = useState<number>(getContainers());
+  const [containersPerSecond, setContainersPerSecond] = useState<number>(
+    getContainersPerSecond()
+  );
   const [dockerfiles, setDockerfiles] = useState<number>(
     getAmountOfDockerfiles()
   );
@@ -31,19 +39,35 @@ export const ContainerProvider: React.FC<{ children: React.ReactNode }> = ({
   const [dockerComposeFiles, setDockerComposeFiles] = useState<number>(
     getAmountOfDockerComposeFiles()
   );
+  const [raspberryPiZero2Ws, setRaspberryPiZero2Ws] = useState<number>(
+    getAmountOfRaspberryPiZero2Ws()
+  );
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      tickContainersPerSecond();
+      refreshValues();
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   const refreshValues = () => {
     setContainers(getContainers());
+    setContainersPerSecond(getContainersPerSecond());
     setDockerfiles(getAmountOfDockerfiles());
     setDockerRunCommands(getAmountOfDockerRunCommands());
     setDockerComposeFiles(getAmountOfDockerComposeFiles());
+    setRaspberryPiZero2Ws(getAmountOfRaspberryPiZero2Ws());
   };
 
   const contextValue = {
     containers,
+    containersPerSecond,
     dockerfiles,
     dockerRunCommands,
     dockerComposeFiles,
+    raspberryPiZero2Ws,
     refreshValues,
   };
 
