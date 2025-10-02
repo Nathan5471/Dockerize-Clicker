@@ -1,6 +1,8 @@
 import { createContext, useState, useContext, useEffect } from "react";
 import {
   getContainers,
+  getClicks,
+  getAmountPerClick,
   getAmountOfDockerfiles,
   getAmountOfDockerRunCommands,
   getAmountOfDockerComposeFiles,
@@ -11,6 +13,8 @@ import {
 
 interface ContainerContextType {
   containers: number;
+  clicks: number;
+  containersPerClick: number;
   containersPerSecond: number;
   dockerfiles: number;
   dockerRunCommands: number;
@@ -27,6 +31,10 @@ export const ContainerProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const [containers, setContainers] = useState<number>(getContainers());
+  const [clicks, setClicks] = useState<number>(getClicks());
+  const [containersPerClick, setContainersPerClick] = useState<number>(
+    getAmountPerClick()
+  );
   const [containersPerSecond, setContainersPerSecond] = useState<number>(
     getContainersPerSecond()
   );
@@ -54,6 +62,8 @@ export const ContainerProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const refreshValues = () => {
     setContainers(getContainers());
+    setClicks(getClicks());
+    setContainersPerClick(getAmountPerClick());
     setContainersPerSecond(getContainersPerSecond());
     setDockerfiles(getAmountOfDockerfiles());
     setDockerRunCommands(getAmountOfDockerRunCommands());
@@ -63,6 +73,8 @@ export const ContainerProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const contextValue = {
     containers,
+    clicks,
+    containersPerClick,
     containersPerSecond,
     dockerfiles,
     dockerRunCommands,

@@ -12,9 +12,17 @@ const updateContainers = (amountToChange: number) => {
   return newTotalContainers;
 };
 
+export const getClicks = () => {
+  const clicks = localStorage.getItem("clicks");
+  return clicks ? JSON.parse(clicks) : 0;
+};
+
 export const clickSticker = () => {
-  const clickMultiplier = getAmountPerClick();
-  return updateContainers(clickMultiplier);
+  const clicks = getClicks();
+  const newClicks = clicks + 1;
+  localStorage.setItem("clicks", JSON.stringify(newClicks));
+  const amountPerClick = getAmountPerClick();
+  return updateContainers(amountPerClick);
 };
 
 export const getAmountPerClick = () => {

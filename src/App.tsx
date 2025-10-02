@@ -11,6 +11,9 @@ import {
 function App() {
   const {
     containers,
+    clicks,
+    containersPerClick,
+    containersPerSecond,
     dockerfiles,
     dockerRunCommands,
     dockerComposeFiles,
@@ -75,7 +78,7 @@ function App() {
           <h2 className="text-4xl text-center font-bold">Dockerize Clicker</h2>
         </div>
         <div className="flex flex-row w-screen h-[calc(90%)]">
-          <div className="flex flex-col w-2/3 items-center justify-center">
+          <div className="flex flex-row w-2/3 items-center justify-center">
             <div className="flex w-1/2 aspect-1 bg-primary-a1 rounded-lg items-center justify-center">
               <img
                 src={"/dockerize-sticker.png"}
@@ -85,6 +88,21 @@ function App() {
                   clicked ? "scale-95" : "hover:scale-105"
                 }`}
               />
+            </div>
+            <div className="grid grid-cols-1 h-auto ml-4 bg-primary-a1 rounded-lg items-center justify-center p-4">
+              <h2 className="text-3xl text-center font-bold mb-2">Stats</h2>
+              <div className="bg-primary-a2 rounded-lg p-4 flex flex-col items-center">
+                <p className="text-2xl font-bold">{containersPerClick}</p>
+                <p className="text-sm">Containers per click</p>
+              </div>
+              <div className="bg-primary-a2 rounded-lg p-4 flex flex-col items-center mt-2">
+                <p className="text-2xl font-bold">{containersPerSecond}</p>
+                <p className="text-sm">Containers per second</p>
+              </div>
+              <div className="bg-primary-a2 rounded-lg p-4 flex flex-col items-center mt-2">
+                <p className="text-2xl font-bold">{clicks}</p>
+                <p className="text-sm">Total Clicks</p>
+              </div>
             </div>
           </div>
           <div className="flex flex-col w-1/3 items-center justify-center">
