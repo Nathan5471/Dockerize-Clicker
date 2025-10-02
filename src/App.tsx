@@ -18,6 +18,15 @@ function App() {
     refreshValues,
   } = useContainer();
   const [clicked, setClicked] = useState(false);
+  const [purchaseAmount, setPurchaseAmount] = useState(1);
+
+  const calculatePrice = (baseCost: number, currentAmount: number) => {
+    let cost = 0;
+    for (let i = 0; i < purchaseAmount; i++) {
+      cost += Math.floor(baseCost * Math.pow(1.65, currentAmount + i));
+    }
+    return cost;
+  };
 
   const handleStickerClick = () => {
     if (clicked) setClicked(false);
@@ -28,7 +37,7 @@ function App() {
   };
 
   const handlePurchaseDockerfile = () => {
-    const result = purchaseDockerfile(1);
+    const result = purchaseDockerfile(purchaseAmount);
     if (result && !result.success) {
       alert(result.message);
     }
@@ -36,7 +45,7 @@ function App() {
   };
 
   const handlePurchaseDockerRunCommand = () => {
-    const result = purchaseDockerRunCommand(1);
+    const result = purchaseDockerRunCommand(purchaseAmount);
     if (result && !result.success) {
       alert(result.message);
     }
@@ -44,7 +53,7 @@ function App() {
   };
 
   const handlePurchaseDockerComposeFile = () => {
-    const result = purchaseDockerComposeFile(1);
+    const result = purchaseDockerComposeFile(purchaseAmount);
     if (result && !result.success) {
       alert(result.message);
     }
@@ -52,7 +61,7 @@ function App() {
   };
 
   const handlePurchaseRaspberryPiZero2W = () => {
-    const result = purchaseRaspberryPiZero2W(1);
+    const result = purchaseRaspberryPiZero2W(purchaseAmount);
     if (result && !result.success) {
       alert(result.message);
     }
@@ -85,6 +94,38 @@ function App() {
               </h2>
               <hr className="w-5/6 border-text my-2 border-2" />
               <div className="flex flex-col w-full h-full items-center overflow-y-auto">
+                <div className="w-11/12 flex flex-row items-center justify-center mt-2">
+                  <button
+                    onClick={() => setPurchaseAmount(1)}
+                    className="bg-primary-a2 hover:scale-105 transition-transform duration-200 p-2 rounded-lg font-bold"
+                  >
+                    1
+                  </button>
+                  <button
+                    onClick={() => setPurchaseAmount(10)}
+                    className="bg-primary-a2 hover:scale-105 transition-transform duration-200 p-2 rounded-lg font-bold ml-2"
+                  >
+                    10
+                  </button>
+                  <button
+                    onClick={() => setPurchaseAmount(25)}
+                    className="bg-primary-a2 hover:scale-105 transition-transform duration-200 p-2 rounded-lg font-bold ml-2"
+                  >
+                    25
+                  </button>
+                  <button
+                    onClick={() => setPurchaseAmount(50)}
+                    className="bg-primary-a2 hover:scale-105 transition-transform duration-200 p-2 rounded-lg font-bold ml-2"
+                  >
+                    50
+                  </button>
+                  <button
+                    onClick={() => setPurchaseAmount(100)}
+                    className="bg-primary-a2 hover:scale-105 transition-transform duration-200 p-2 rounded-lg font-bold ml-2"
+                  >
+                    100
+                  </button>
+                </div>
                 <button
                   onClick={handlePurchaseDockerfile}
                   className="w-11/12 bg-primary-a2 hover:scale-105 transition-transform duration-200 p-2 rounded-lg mt-2"
@@ -97,8 +138,7 @@ function App() {
                     container per click.
                   </p>
                   <p className="text-left font-bold">
-                    Cost: {Math.floor(25 * Math.pow(1.65, dockerfiles))}{" "}
-                    Containers
+                    Cost: {calculatePrice(25, dockerfiles)} Containers
                   </p>
                 </button>
                 <button
@@ -113,8 +153,7 @@ function App() {
                     Get 5 more containers per click.
                   </p>
                   <p className="text-left font-bold">
-                    Cost: {Math.floor(100 * Math.pow(1.65, dockerRunCommands))}{" "}
-                    Containers
+                    Cost: {calculatePrice(100, dockerRunCommands)} Containers
                   </p>
                 </button>
                 <button
@@ -129,8 +168,7 @@ function App() {
                     deployments. Get 30 more containers per click.
                   </p>
                   <p className="text-left font-bold">
-                    Cost: {Math.floor(750 * Math.pow(1.65, dockerComposeFiles))}{" "}
-                    Containers
+                    Cost: {calculatePrice(750, dockerComposeFiles)} Containers
                   </p>
                 </button>
                 <button
@@ -146,9 +184,7 @@ function App() {
                     containers per second.
                   </p>
                   <p className="text-left font-bold">
-                    Cost:{" "}
-                    {Math.floor(5000 * Math.pow(1.65, raspberryPiZero2Ws))}{" "}
-                    Containers
+                    Cost: {calculatePrice(5000, raspberryPiZero2Ws)} Containers
                   </p>
                 </button>
               </div>
