@@ -1,0 +1,36 @@
+{
+    "quests": [
+        {
+            "id": 1,
+            "name": "Just Beginning",
+            "description": "Get your first 100 clicks",
+            "reward": 100,
+            "target": "clicks",
+            "targetValue": 100
+        },
+        {
+            "id": 2,
+            "name": "Get Buying",
+            "description": "Make your first purchase",
+            "reward": 250,
+            "target": "purchases",
+            "targetValue": 1
+        },
+        {
+            "id": 3,
+            "name": "Containerized",
+            "description": "Have 1000 containers",
+            "reward": 500,
+            "target": "containers",
+            "targetValue": 1000
+        },
+        {
+            "id": 4,
+            "name": "Docker Pro",
+            "description": "Have 5000 containers in all time",
+            "reward": 500,
+            "target": "totalContainers",
+            "targetValue": 5000
+        }
+    ]
+}

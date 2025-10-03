@@ -11,9 +11,26 @@ export const getContainers = () => {
 
 const updateContainers = (amountToChange: number) => {
   const currentContainers = getContainers();
-  const newTotalContainers = currentContainers + amountToChange;
-  localStorage.setItem("containers", JSON.stringify(newTotalContainers));
-  return newTotalContainers;
+  const newContainers = currentContainers + amountToChange;
+  localStorage.setItem("containers", JSON.stringify(newContainers));
+  addToTotalContainers(amountToChange);
+  return newContainers;
+};
+
+export const getTotalContainers = () => {
+  // All time
+  const totalContainers = localStorage.getItem("totalContainers");
+  return totalContainers ? JSON.parse(totalContainers) : 0;
+};
+
+export const addToTotalContainers = (amountToAdd: number) => {
+  // Again, all time
+  if (amountToAdd < 0) {
+    return;
+  }
+  const currentTotalContainers = getTotalContainers();
+  const newTotalContainers = currentTotalContainers + amountToAdd;
+  localStorage.setItem("totalContainers", JSON.stringify(newTotalContainers));
 };
 
 export const getClicks = () => {
@@ -46,7 +63,24 @@ export const getAmountOfDockerfiles = () => {
   return dockerFiles ? JSON.parse(dockerFiles) : 0;
 };
 
+export const getTotalPurchases = () => {
+  const totalPurchases = localStorage.getItem("totalPurchases");
+  return totalPurchases ? JSON.parse(totalPurchases) : 0;
+};
+
+export const addToTotalPurchases = (amount: number) => {
+  if (amount < 0) {
+    return;
+  }
+  const currentTotalPurchases = getTotalPurchases();
+  const newTotalPurchases = currentTotalPurchases + amount;
+  localStorage.setItem("totalPurchases", newTotalPurchases);
+};
+
 export const purchaseDockerfile = (amount: number) => {
+  if (amount < 0) {
+    return { success: false, message: "You can't purchase negative upgrades" };
+  }
   const baseCost = 25;
   const amountOfDockerFiles = getAmountOfDockerfiles();
   let cost = 0;
@@ -63,6 +97,7 @@ export const purchaseDockerfile = (amount: number) => {
     JSON.stringify(amountOfDockerFiles + amount)
   );
   increaseAmountPerClick(amount);
+  addToTotalPurchases(amount);
   return { success: true };
 };
 
@@ -72,6 +107,9 @@ export const getAmountOfDockerRunCommands = () => {
 };
 
 export const purchaseDockerRunCommand = (amount: number) => {
+  if (amount < 0) {
+    return { success: false, message: "You can't purchase negative upgrades" };
+  }
   const baseCost = 100;
   const amountOfDockerRunCommands = getAmountOfDockerRunCommands();
   let cost = 0;
@@ -90,6 +128,7 @@ export const purchaseDockerRunCommand = (amount: number) => {
     JSON.stringify(amountOfDockerRunCommands + amount)
   );
   increaseAmountPerClick(amount * 5);
+  addToTotalPurchases(amount);
   return { success: true };
 };
 
@@ -99,6 +138,9 @@ export const getAmountOfDockerComposeFiles = () => {
 };
 
 export const purchaseDockerComposeFile = (amount: number) => {
+  if (amount < 0) {
+    return { success: false, message: "You can't purchase negative upgrades" };
+  }
   const baseCost = 750;
   const amountOfDockerFiles = getAmountOfDockerComposeFiles();
   let cost = 0;
@@ -115,6 +157,7 @@ export const purchaseDockerComposeFile = (amount: number) => {
     JSON.stringify(amountOfDockerFiles + amount)
   );
   increaseAmountPerClick(amount * 30);
+  addToTotalPurchases(amount);
   return { success: true };
 };
 
@@ -144,6 +187,9 @@ export const getAmountOfRaspberryPiZero2Ws = () => {
 };
 
 export const purchaseRaspberryPiZero2W = (amount: number) => {
+  if (amount < 0) {
+    return { success: false, message: "You can't purchase negative upgrades" };
+  }
   const baseCost = 5000;
   const amountOfRaspberryPiZerosWs = getAmountOfRaspberryPiZero2Ws();
   let cost = 0;
@@ -162,6 +208,7 @@ export const purchaseRaspberryPiZero2W = (amount: number) => {
     JSON.stringify(amountOfRaspberryPiZerosWs + amount)
   );
   increaseContainersPerSecond(amount * 10);
+  addToTotalPurchases(amount);
   return { success: true };
 };
 
@@ -171,6 +218,9 @@ export const getAmountOfRaspberryPi4s = () => {
 };
 
 export const purchaseRaspberryPi4 = (amount: number) => {
+  if (amount < 0) {
+    return { success: false, message: "You can't purchase negative upgrades" };
+  }
   const baseCost = 30000;
   const amountOfRaspberryPi4s = getAmountOfRaspberryPi4s();
   let cost = 0;
@@ -187,6 +237,7 @@ export const purchaseRaspberryPi4 = (amount: number) => {
     JSON.stringify(amountOfRaspberryPi4s + amount)
   );
   increaseContainersPerSecond(amount * 100);
+  addToTotalPurchases(amount);
   return { success: true };
 };
 
@@ -196,6 +247,9 @@ export const getAmountOfZimaBoards = () => {
 };
 
 export const purchaseZimaBoard = (amount: number) => {
+  if (amount < 0) {
+    return { success: false, message: "You can't purchase negative upgrades" };
+  }
   const baseCost = 75000;
   const amountOfZimaBoards = getAmountOfZimaBoards();
   let cost = 0;
@@ -212,6 +266,7 @@ export const purchaseZimaBoard = (amount: number) => {
     JSON.stringify(amountOfZimaBoards + amount)
   );
   increaseContainersPerSecond(amount * 250);
+  addToTotalPurchases(amount);
   return { success: true };
 };
 
@@ -221,6 +276,9 @@ export const getAmountOfDockerSwarms = () => {
 };
 
 export const purchaseDockerSwarm = (amount: number) => {
+  if (amount < 0) {
+    return { success: false, message: "You can't purchase negative upgrades" };
+  }
   const baseCost = 100000;
   const amountOfDockerSwarms = getAmountOfDockerSwarms();
   let cost = 0;
@@ -237,5 +295,6 @@ export const purchaseDockerSwarm = (amount: number) => {
     JSON.stringify(amountOfDockerSwarms + amount)
   );
   increaseContainersPerSecond(amount * 500);
+  addToTotalPurchases(amount);
   return { success: true };
 };

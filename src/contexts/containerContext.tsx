@@ -1,8 +1,10 @@
 import { createContext, useState, useContext, useEffect } from "react";
 import {
   getContainers,
+  getTotalContainers,
   getClicks,
   getAmountPerClick,
+  getTotalPurchases,
   getAmountOfDockerfiles,
   getAmountOfDockerRunCommands,
   getAmountOfDockerComposeFiles,
@@ -16,9 +18,11 @@ import {
 
 interface ContainerContextType {
   containers: number;
+  totalContainers: number;
   clicks: number;
   containersPerClick: number;
   containersPerSecond: number;
+  totalPurchases: number;
   dockerfiles: number;
   dockerRunCommands: number;
   dockerComposeFiles: number;
@@ -37,12 +41,18 @@ export const ContainerProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const [containers, setContainers] = useState<number>(getContainers());
+  const [totalContainers, setTotalContainers] = useState<number>(
+    getTotalContainers()
+  );
   const [clicks, setClicks] = useState<number>(getClicks());
   const [containersPerClick, setContainersPerClick] = useState<number>(
     getAmountPerClick()
   );
   const [containersPerSecond, setContainersPerSecond] = useState<number>(
     getContainersPerSecond()
+  );
+  const [totalPurchases, setTotalPurchases] = useState<number>(
+    getTotalPurchases()
   );
   const [dockerfiles, setDockerfiles] = useState<number>(
     getAmountOfDockerfiles()
@@ -75,9 +85,11 @@ export const ContainerProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const refreshValues = () => {
     setContainers(getContainers());
+    setTotalContainers(getTotalContainers());
     setClicks(getClicks());
     setContainersPerClick(getAmountPerClick());
     setContainersPerSecond(getContainersPerSecond());
+    setTotalPurchases(getTotalPurchases());
     setDockerfiles(getAmountOfDockerfiles());
     setDockerRunCommands(getAmountOfDockerRunCommands());
     setDockerComposeFiles(getAmountOfDockerComposeFiles());
@@ -89,9 +101,11 @@ export const ContainerProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const contextValue = {
     containers,
+    totalContainers,
     clicks,
     containersPerClick,
     containersPerSecond,
+    totalPurchases,
     dockerfiles,
     dockerRunCommands,
     dockerComposeFiles,
