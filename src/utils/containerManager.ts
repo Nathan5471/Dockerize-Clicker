@@ -164,3 +164,78 @@ export const purchaseRaspberryPiZero2W = (amount: number) => {
   increaseContainersPerSecond(amount * 10);
   return { success: true };
 };
+
+export const getAmountOfRaspberryPi4s = () => {
+  const raspberryPi4s = localStorage.getItem("raspberryPi4s");
+  return raspberryPi4s ? JSON.parse(raspberryPi4s) : 0;
+};
+
+export const purchaseRaspberryPi4 = (amount: number) => {
+  const baseCost = 30000;
+  const amountOfRaspberryPi4s = getAmountOfRaspberryPi4s();
+  let cost = 0;
+  for (let i = 0; i < amount; i++) {
+    cost += Math.floor(baseCost * Math.pow(1.65, amountOfRaspberryPi4s + i));
+  }
+  const currentContainers = getContainers();
+  if (currentContainers < cost) {
+    return { success: false, message: "Not enough containers" };
+  }
+  updateContainers(-cost);
+  localStorage.setItem(
+    "raspberryPi4s",
+    JSON.stringify(amountOfRaspberryPi4s + amount)
+  );
+  increaseContainersPerSecond(amount * 100);
+  return { success: true };
+};
+
+export const getAmountOfZimaBoards = () => {
+  const zimaBoards = localStorage.getItem("zimaBoards");
+  return zimaBoards ? JSON.parse(zimaBoards) : 0;
+};
+
+export const purchaseZimaBoard = (amount: number) => {
+  const baseCost = 75000;
+  const amountOfZimaBoards = getAmountOfZimaBoards();
+  let cost = 0;
+  for (let i = 0; i < amount; i++) {
+    cost += Math.floor(baseCost * Math.pow(1.65, amountOfZimaBoards + i));
+  }
+  const currentContainers = getContainers();
+  if (currentContainers < cost) {
+    return { success: false, message: "Not enough containers" };
+  }
+  updateContainers(-cost);
+  localStorage.setItem(
+    "zimaBoards",
+    JSON.stringify(amountOfZimaBoards + amount)
+  );
+  increaseContainersPerSecond(amount * 250);
+  return { success: true };
+};
+
+export const getAmountOfDockerSwarms = () => {
+  const dockerSwarms = localStorage.getItem("dockerSwarms");
+  return dockerSwarms ? JSON.parse(dockerSwarms) : 0;
+};
+
+export const purchaseDockerSwarm = (amount: number) => {
+  const baseCost = 100000;
+  const amountOfDockerSwarms = getAmountOfDockerSwarms();
+  let cost = 0;
+  for (let i = 0; i < amount; i++) {
+    cost += Math.floor(baseCost * Math.pow(1.65, amountOfDockerSwarms + i));
+  }
+  const currentContainers = getContainers();
+  if (currentContainers < cost) {
+    return { success: false, message: "Not enough containers" };
+  }
+  updateContainers(-cost);
+  localStorage.setItem(
+    "dockerSwarms",
+    JSON.stringify(amountOfDockerSwarms + amount)
+  );
+  increaseContainersPerSecond(amount * 500);
+  return { success: true };
+};

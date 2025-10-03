@@ -7,6 +7,9 @@ import {
   purchaseDockerRunCommand,
   purchaseDockerComposeFile,
   purchaseRaspberryPiZero2W,
+  purchaseRaspberryPi4,
+  purchaseZimaBoard,
+  purchaseDockerSwarm,
 } from "./utils/containerManager";
 import Overlay from "./components/Overlay";
 import Settings from "./components/Settings";
@@ -22,6 +25,9 @@ function App() {
     dockerRunCommands,
     dockerComposeFiles,
     raspberryPiZero2Ws,
+    raspberryPi4s,
+    zimaBoards,
+    dockerSwarms,
     refreshValues,
   } = useContainer();
   const [clicked, setClicked] = useState(false);
@@ -69,6 +75,30 @@ function App() {
 
   const handlePurchaseRaspberryPiZero2W = () => {
     const result = purchaseRaspberryPiZero2W(purchaseAmount);
+    if (result && !result.success) {
+      alert(result.message);
+    }
+    refreshValues();
+  };
+
+  const handlePurchaseRaspberryPi4 = () => {
+    const result = purchaseRaspberryPi4(purchaseAmount);
+    if (result && !result.success) {
+      alert(result.message);
+    }
+    refreshValues();
+  };
+
+  const handlePurchaseZimaBoard = () => {
+    const result = purchaseZimaBoard(purchaseAmount);
+    if (result && !result.success) {
+      alert(result.message);
+    }
+    refreshValues();
+  };
+
+  const handlePurchaseDockerSwarm = () => {
+    const result = purchaseDockerSwarm(purchaseAmount);
     if (result && !result.success) {
       alert(result.message);
     }
@@ -208,7 +238,7 @@ function App() {
                 </button>
                 <button
                   onClick={handlePurchaseRaspberryPiZero2W}
-                  className="w-11/12 bg-primary-a2 hover:scale-105 transition-transform duration-200 p-2 rounded-lg mt-2 mb-4"
+                  className="w-11/12 bg-primary-a2 hover:scale-105 transition-transform duration-200 p-2 rounded-lg mt-2"
                 >
                   <h3 className="text-lg font-bold">
                     Purchase Raspberry Pi Zero 2W ({raspberryPiZero2Ws})
@@ -220,6 +250,54 @@ function App() {
                   </p>
                   <p className="text-left font-bold">
                     Cost: {calculatePrice(5000, raspberryPiZero2Ws)} Containers
+                  </p>
+                </button>
+                <button
+                  onClick={handlePurchaseRaspberryPi4}
+                  className="w-11/12 bg-primary-a2 hover:scale-105 transition-transform duration-200 p-2 rounded-lg mt-2"
+                >
+                  <h3 className="text-lg font-bold">
+                    Purchase Raspberry Pi 4 ({raspberryPi4s})
+                  </h3>
+                  <p className="text-left">
+                    The Raspberry Pi 4 is a powerful single board computer (sbc)
+                    that can be great as a home server. Get 100 containers per
+                    second.
+                  </p>
+                  <p className="text-left font-bold">
+                    Cost: {calculatePrice(30000, raspberryPi4s)} Containers
+                  </p>
+                </button>
+                <button
+                  onClick={handlePurchaseZimaBoard}
+                  className="w-11/12 bg-primary-a2 hover:scale-105 transition-trasnsform duration-200 p-2 rounded-lg mt-2"
+                >
+                  <h3 className="text-lg font-bold">
+                    Purchase ZimaBoard ({zimaBoards})
+                  </h3>
+                  <p className="text-left">
+                    The ZimaBoard is another SBC that is designed to be a home
+                    server. It was meant to be the prize for Dockerize, but it
+                    was sold out during fulfilment. Get 250 containers per
+                    second.
+                  </p>
+                  <p className="text-left font-bold">
+                    Cost: {calculatePrice(75000, zimaBoards)} Containers
+                  </p>
+                </button>
+                <button
+                  onClick={handlePurchaseDockerSwarm}
+                  className="w-11/12 bg-primary-a2 hover:scale-105 transition-transform duration-200 p-2 rounded-lg mt-2 mb-4"
+                >
+                  <h3 className="text-lg font-bold">
+                    Purchase Docker Swarm ({dockerSwarms})
+                  </h3>
+                  <p className="text-left">
+                    Docker Swarm is a system for manaing clusters of machines to
+                    deploy containers. Get 500 more containers per click.
+                  </p>
+                  <p className="text-left font-bold">
+                    Cost: {calculatePrice(100000, dockerSwarms)} Containers
                   </p>
                 </button>
               </div>

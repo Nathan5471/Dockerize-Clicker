@@ -9,6 +9,9 @@ import {
   getContainersPerSecond,
   tickContainersPerSecond,
   getAmountOfRaspberryPiZero2Ws,
+  getAmountOfRaspberryPi4s,
+  getAmountOfZimaBoards,
+  getAmountOfDockerSwarms,
 } from "../utils/containerManager";
 
 interface ContainerContextType {
@@ -20,6 +23,9 @@ interface ContainerContextType {
   dockerRunCommands: number;
   dockerComposeFiles: number;
   raspberryPiZero2Ws: number;
+  raspberryPi4s: number;
+  zimaBoards: number;
+  dockerSwarms: number;
   refreshValues: () => void;
 }
 
@@ -50,6 +56,13 @@ export const ContainerProvider: React.FC<{ children: React.ReactNode }> = ({
   const [raspberryPiZero2Ws, setRaspberryPiZero2Ws] = useState<number>(
     getAmountOfRaspberryPiZero2Ws()
   );
+  const [raspberryPi4s, setRaspberryPi4s] = useState<number>(
+    getAmountOfRaspberryPi4s()
+  );
+  const [zimaBoards, setZimaBoards] = useState<number>(getAmountOfZimaBoards());
+  const [dockerSwarms, setDockerSwarms] = useState<number>(
+    getAmountOfDockerSwarms()
+  );
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -69,6 +82,9 @@ export const ContainerProvider: React.FC<{ children: React.ReactNode }> = ({
     setDockerRunCommands(getAmountOfDockerRunCommands());
     setDockerComposeFiles(getAmountOfDockerComposeFiles());
     setRaspberryPiZero2Ws(getAmountOfRaspberryPiZero2Ws());
+    setRaspberryPi4s(getAmountOfRaspberryPi4s());
+    setZimaBoards(getAmountOfZimaBoards());
+    setDockerSwarms(getAmountOfDockerSwarms());
   };
 
   const contextValue = {
@@ -80,6 +96,9 @@ export const ContainerProvider: React.FC<{ children: React.ReactNode }> = ({
     dockerRunCommands,
     dockerComposeFiles,
     raspberryPiZero2Ws,
+    raspberryPi4s,
+    zimaBoards,
+    dockerSwarms,
     refreshValues,
   };
 
