@@ -41,6 +41,14 @@ function App() {
     return cost;
   };
 
+  const canPurchase = (baseCost: number, currentAmount: number) => {
+    const cost = calculatePrice(baseCost, currentAmount);
+    if (cost < containers) {
+      return true;
+    }
+    return false;
+  };
+
   const handleStickerClick = () => {
     if (clicked) setClicked(false);
     setClicked(true);
@@ -52,6 +60,9 @@ function App() {
   const handlePurchaseDockerfile = () => {
     const result = purchaseDockerfile(purchaseAmount);
     if (result && !result.success) {
+      if (result.message === "Not enough containers") {
+        return;
+      }
       alert(result.message);
     }
     refreshValues();
@@ -60,6 +71,9 @@ function App() {
   const handlePurchaseDockerRunCommand = () => {
     const result = purchaseDockerRunCommand(purchaseAmount);
     if (result && !result.success) {
+      if (result.message === "Not enough containers") {
+        return;
+      }
       alert(result.message);
     }
     refreshValues();
@@ -68,6 +82,9 @@ function App() {
   const handlePurchaseDockerComposeFile = () => {
     const result = purchaseDockerComposeFile(purchaseAmount);
     if (result && !result.success) {
+      if (result.message === "Not enough containers") {
+        return;
+      }
       alert(result.message);
     }
     refreshValues();
@@ -76,6 +93,9 @@ function App() {
   const handlePurchaseRaspberryPiZero2W = () => {
     const result = purchaseRaspberryPiZero2W(purchaseAmount);
     if (result && !result.success) {
+      if (result.message === "Not enough containers") {
+        return;
+      }
       alert(result.message);
     }
     refreshValues();
@@ -84,6 +104,9 @@ function App() {
   const handlePurchaseRaspberryPi4 = () => {
     const result = purchaseRaspberryPi4(purchaseAmount);
     if (result && !result.success) {
+      if (result.message === "Not enough containers") {
+        return;
+      }
       alert(result.message);
     }
     refreshValues();
@@ -92,6 +115,9 @@ function App() {
   const handlePurchaseZimaBoard = () => {
     const result = purchaseZimaBoard(purchaseAmount);
     if (result && !result.success) {
+      if (result.message === "Not enough containers") {
+        return;
+      }
       alert(result.message);
     }
     refreshValues();
@@ -100,6 +126,9 @@ function App() {
   const handlePurchaseDockerSwarm = () => {
     const result = purchaseDockerSwarm(purchaseAmount);
     if (result && !result.success) {
+      if (result.message === "Not enough containers") {
+        return;
+      }
       alert(result.message);
     }
     refreshValues();
@@ -154,7 +183,15 @@ function App() {
           </div>
           <div className="flex flex-col w-1/3 items-center justify-center">
             <div className="flex flex-col w-5/6 h-11/12 bg-primary-a1 rounded-lg items-center">
-              <h2 className="text-3xl text-center font-bold mt-4">
+              <div className="flex flex-row w-full p-2">
+                <button className="w-full bg-primary-a2 hover:scale-105 transition-transform duration-200 p-2 rounded-lg font-bold">
+                  Shop
+                </button>
+                <button className="w-full bg-gray-400 text-gray-200 hover:scale-105 transition-transform duration-200 p-2 rounded-lg font-bold ml-2">
+                  Quests
+                </button>
+              </div>
+              <h2 className="text-3xl text-center font-bold">
                 Containers: {containers}
               </h2>
               <hr className="w-5/6 border-text my-2 border-2" />
@@ -162,38 +199,62 @@ function App() {
                 <div className="w-11/12 flex flex-row items-center justify-center mt-2">
                   <button
                     onClick={() => setPurchaseAmount(1)}
-                    className="bg-primary-a2 hover:scale-105 transition-transform duration-200 p-2 rounded-lg font-bold"
+                    className={`${
+                      purchaseAmount === 1
+                        ? "bg-primary-a2"
+                        : "bg-gray-400 text-gray-200"
+                    } hover:scale-105 transition-transform duration-200 p-2 rounded-lg font-bold`}
                   >
                     1
                   </button>
                   <button
                     onClick={() => setPurchaseAmount(10)}
-                    className="bg-primary-a2 hover:scale-105 transition-transform duration-200 p-2 rounded-lg font-bold ml-2"
+                    className={`${
+                      purchaseAmount === 10
+                        ? "bg-primary-a2"
+                        : "bg-gray-400 text-gray-200"
+                    } hover:scale-105 transition-transform duration-200 p-2 rounded-lg font-bold ml-2`}
                   >
                     10
                   </button>
                   <button
                     onClick={() => setPurchaseAmount(25)}
-                    className="bg-primary-a2 hover:scale-105 transition-transform duration-200 p-2 rounded-lg font-bold ml-2"
+                    className={`${
+                      purchaseAmount === 25
+                        ? "bg-primary-a2"
+                        : "bg-gray-400 text-gray-200"
+                    } hover:scale-105 transition-transform duration-200 p-2 rounded-lg font-bold ml-2`}
                   >
                     25
                   </button>
                   <button
                     onClick={() => setPurchaseAmount(50)}
-                    className="bg-primary-a2 hover:scale-105 transition-transform duration-200 p-2 rounded-lg font-bold ml-2"
+                    className={`${
+                      purchaseAmount === 50
+                        ? "bg-primary-a2"
+                        : "bg-gray-400 text-gray-200"
+                    } hover:scale-105 transition-transform duration-200 p-2 rounded-lg font-bold ml-2`}
                   >
                     50
                   </button>
                   <button
                     onClick={() => setPurchaseAmount(100)}
-                    className="bg-primary-a2 hover:scale-105 transition-transform duration-200 p-2 rounded-lg font-bold ml-2"
+                    className={`${
+                      purchaseAmount === 100
+                        ? "bg-primary-a2"
+                        : "bg-gray-400 text-gray-200"
+                    } hover:scale-105 transition-transform duration-200 p-2 rounded-lg font-bold ml-2`}
                   >
                     100
                   </button>
                 </div>
                 <button
                   onClick={handlePurchaseDockerfile}
-                  className="w-11/12 bg-primary-a2 hover:scale-105 transition-transform duration-200 p-2 rounded-lg mt-2"
+                  className={`w-11/12 ${
+                    canPurchase(25, dockerfiles)
+                      ? "bg-primary-a2"
+                      : "bg-gray-400 text-gray-200 cursor-not-allowed"
+                  } hover:scale-105 transition-transform duration-200 p-2 rounded-lg mt-2`}
                 >
                   <h3 className="text-xl font-bold">
                     Purchase Dockerfile ({dockerfiles})
@@ -208,7 +269,11 @@ function App() {
                 </button>
                 <button
                   onClick={handlePurchaseDockerRunCommand}
-                  className="w-11/12 bg-primary-a2 hover:scale-105 transition-transform duration-200 p-2 rounded-lg mt-2"
+                  className={`w-11/12 ${
+                    canPurchase(100, dockerRunCommands)
+                      ? "bg-primary-a2"
+                      : "bg-gray-400 text-gray-200 cursor-not-allowed"
+                  } hover:scale-105 transition-transform duration-200 p-2 rounded-lg mt-2`}
                 >
                   <h3 className="text-lg font-bold">
                     Purchase Docker Run Command ({dockerRunCommands})
@@ -223,7 +288,11 @@ function App() {
                 </button>
                 <button
                   onClick={handlePurchaseDockerComposeFile}
-                  className="w-11/12 bg-primary-a2 hover:scale-105 transition-transform duration-200 p-2 rounded-lg mt-2"
+                  className={`w-11/12 ${
+                    canPurchase(750, dockerComposeFiles)
+                      ? "bg-primary-a2"
+                      : "bg-gray-400 text-gray-200 cursor-not-allowed"
+                  } hover:scale-105 transition-transform duration-200 p-2 rounded-lg mt-2`}
                 >
                   <h3 className="text-lg font-bold">
                     Purchase Docker Compose File ({dockerComposeFiles})
@@ -238,7 +307,11 @@ function App() {
                 </button>
                 <button
                   onClick={handlePurchaseRaspberryPiZero2W}
-                  className="w-11/12 bg-primary-a2 hover:scale-105 transition-transform duration-200 p-2 rounded-lg mt-2"
+                  className={`w-11/12 ${
+                    canPurchase(5000, raspberryPiZero2Ws)
+                      ? "bg-primary-a2"
+                      : "bg-gray-400 text-gray-200 cursor-not-allowed"
+                  } hover:scale-105 transition-transform duration-200 p-2 rounded-lg mt-2`}
                 >
                   <h3 className="text-lg font-bold">
                     Purchase Raspberry Pi Zero 2W ({raspberryPiZero2Ws})
@@ -254,7 +327,11 @@ function App() {
                 </button>
                 <button
                   onClick={handlePurchaseRaspberryPi4}
-                  className="w-11/12 bg-primary-a2 hover:scale-105 transition-transform duration-200 p-2 rounded-lg mt-2"
+                  className={`w-11/12 ${
+                    canPurchase(30000, raspberryPi4s)
+                      ? "bg-primary-a2"
+                      : "bg-gray-400 text-gray-200 cursor-not-allowed"
+                  } hover:scale-105 transition-transform duration-200 p-2 rounded-lg mt-2`}
                 >
                   <h3 className="text-lg font-bold">
                     Purchase Raspberry Pi 4 ({raspberryPi4s})
@@ -270,7 +347,11 @@ function App() {
                 </button>
                 <button
                   onClick={handlePurchaseZimaBoard}
-                  className="w-11/12 bg-primary-a2 hover:scale-105 transition-trasnsform duration-200 p-2 rounded-lg mt-2"
+                  className={`w-11/12 ${
+                    canPurchase(75000, zimaBoards)
+                      ? "bg-primary-a2"
+                      : "bg-gray-400 text-gray-200 cursor-not-allowed"
+                  } hover:scale-105 transition-trasnsform duration-200 p-2 rounded-lg mt-2`}
                 >
                   <h3 className="text-lg font-bold">
                     Purchase ZimaBoard ({zimaBoards})
@@ -287,7 +368,11 @@ function App() {
                 </button>
                 <button
                   onClick={handlePurchaseDockerSwarm}
-                  className="w-11/12 bg-primary-a2 hover:scale-105 transition-transform duration-200 p-2 rounded-lg mt-2 mb-4"
+                  className={`w-11/12 ${
+                    canPurchase(100000, dockerSwarms)
+                      ? "bg-primary-a2"
+                      : "bg-gray-400 text-gray-200 cursor-not-allowed"
+                  } hover:scale-105 transition-transform duration-200 p-2 rounded-lg mt-2 mb-4`}
                 >
                   <h3 className="text-lg font-bold">
                     Purchase Docker Swarm ({dockerSwarms})
