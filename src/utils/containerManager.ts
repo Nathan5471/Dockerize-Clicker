@@ -1,5 +1,9 @@
 // This is for managing the currency of Dockerize Clicker, not actual Docker containers
 
+export const resetGame = () => {
+  localStorage.clear();
+};
+
 export const getContainers = () => {
   const containers = localStorage.getItem("containers");
   return containers ? JSON.parse(containers) : 0;

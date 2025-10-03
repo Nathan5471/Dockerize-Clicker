@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useOverlay } from "./contexts/overlayContext";
 import { useContainer } from "./contexts/containerContext";
 import {
   clickSticker,
@@ -7,8 +8,11 @@ import {
   purchaseDockerComposeFile,
   purchaseRaspberryPiZero2W,
 } from "./utils/containerManager";
+import Overlay from "./components/Overlay";
+import Settings from "./components/Settings";
 
 function App() {
+  const { openOverlay } = useOverlay();
   const {
     containers,
     clicks,
@@ -71,11 +75,24 @@ function App() {
     refreshValues();
   };
 
+  const handleOpenSettings = () => {
+    openOverlay(<Settings />);
+  };
+
   return (
     <>
       <div className="w-screen h-screen bg-primary-a0 text-text">
-        <div className="w-screen h-[calc(10%)] bg-primary-a1 flex items-center justify-center">
+        <div className="grid grid-cols-3 w-screen h-[calc(10%)] bg-primary-a1 items-center justify-center">
+          <div />
           <h2 className="text-4xl text-center font-bold">Dockerize Clicker</h2>
+          <div className="flex justify-end pr-2">
+            <button
+              className="bg-primary-a2 p-2 rounded-lg hover:scale-105 transition-transform duration-200 font-bold text-xl"
+              onClick={handleOpenSettings}
+            >
+              Settings
+            </button>
+          </div>
         </div>
         <div className="flex flex-row w-screen h-[calc(90%)]">
           <div className="flex flex-row w-2/3 items-center justify-center">
@@ -93,15 +110,15 @@ function App() {
               <h2 className="text-3xl text-center font-bold mb-2">Stats</h2>
               <div className="bg-primary-a2 rounded-lg p-4 flex flex-col items-center">
                 <p className="text-2xl font-bold">{containersPerClick}</p>
-                <p className="text-sm">Containers per click</p>
+                <p>Containers per click</p>
               </div>
               <div className="bg-primary-a2 rounded-lg p-4 flex flex-col items-center mt-2">
                 <p className="text-2xl font-bold">{containersPerSecond}</p>
-                <p className="text-sm">Containers per second</p>
+                <p>Containers per second</p>
               </div>
               <div className="bg-primary-a2 rounded-lg p-4 flex flex-col items-center mt-2">
                 <p className="text-2xl font-bold">{clicks}</p>
-                <p className="text-sm">Total Clicks</p>
+                <p>Total Clicks</p>
               </div>
             </div>
           </div>
@@ -210,6 +227,7 @@ function App() {
           </div>
         </div>
       </div>
+      <Overlay />
     </>
   );
 }
