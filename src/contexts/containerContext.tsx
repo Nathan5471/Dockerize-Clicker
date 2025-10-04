@@ -14,6 +14,7 @@ import {
   getAmountOfRaspberryPi4s,
   getAmountOfZimaBoards,
   getAmountOfDockerSwarms,
+  getRedeemedQuestIds,
 } from "../utils/containerManager";
 
 interface ContainerContextType {
@@ -30,6 +31,7 @@ interface ContainerContextType {
   raspberryPi4s: number;
   zimaBoards: number;
   dockerSwarms: number;
+  redeemedQuestIds: number[];
   refreshValues: () => void;
 }
 
@@ -73,6 +75,9 @@ export const ContainerProvider: React.FC<{ children: React.ReactNode }> = ({
   const [dockerSwarms, setDockerSwarms] = useState<number>(
     getAmountOfDockerSwarms()
   );
+  const [redeemedQuestIds, setRedeemedQuestIds] = useState<number[]>(
+    getRedeemedQuestIds()
+  );
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -97,6 +102,7 @@ export const ContainerProvider: React.FC<{ children: React.ReactNode }> = ({
     setRaspberryPi4s(getAmountOfRaspberryPi4s());
     setZimaBoards(getAmountOfZimaBoards());
     setDockerSwarms(getAmountOfDockerSwarms());
+    setRedeemedQuestIds(getRedeemedQuestIds());
   };
 
   const contextValue = {
@@ -113,6 +119,7 @@ export const ContainerProvider: React.FC<{ children: React.ReactNode }> = ({
     raspberryPi4s,
     zimaBoards,
     dockerSwarms,
+    redeemedQuestIds,
     refreshValues,
   };
 

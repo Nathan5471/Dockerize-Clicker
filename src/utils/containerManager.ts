@@ -6,7 +6,7 @@ export const resetGame = () => {
 
 export const getContainers = () => {
   const containers = localStorage.getItem("containers");
-  return containers ? JSON.parse(containers) : 0;
+  return containers ? (JSON.parse(containers) as number) : 0;
 };
 
 const updateContainers = (amountToChange: number) => {
@@ -20,7 +20,7 @@ const updateContainers = (amountToChange: number) => {
 export const getTotalContainers = () => {
   // All time
   const totalContainers = localStorage.getItem("totalContainers");
-  return totalContainers ? JSON.parse(totalContainers) : 0;
+  return totalContainers ? (JSON.parse(totalContainers) as number) : 0;
 };
 
 export const addToTotalContainers = (amountToAdd: number) => {
@@ -35,7 +35,7 @@ export const addToTotalContainers = (amountToAdd: number) => {
 
 export const getClicks = () => {
   const clicks = localStorage.getItem("clicks");
-  return clicks ? JSON.parse(clicks) : 0;
+  return clicks ? (JSON.parse(clicks) as number) : 0;
 };
 
 export const clickSticker = () => {
@@ -48,7 +48,7 @@ export const clickSticker = () => {
 
 export const getAmountPerClick = () => {
   const amountPerClick = localStorage.getItem("amountPerClick");
-  return amountPerClick ? JSON.parse(amountPerClick) : 1;
+  return amountPerClick ? (JSON.parse(amountPerClick) as number) : 1;
 };
 
 const increaseAmountPerClick = (amount: number) => {
@@ -58,14 +58,9 @@ const increaseAmountPerClick = (amount: number) => {
   return newAmount;
 };
 
-export const getAmountOfDockerfiles = () => {
-  const dockerFiles = localStorage.getItem("dockerfiles");
-  return dockerFiles ? JSON.parse(dockerFiles) : 0;
-};
-
 export const getTotalPurchases = () => {
   const totalPurchases = localStorage.getItem("totalPurchases");
-  return totalPurchases ? JSON.parse(totalPurchases) : 0;
+  return totalPurchases ? (JSON.parse(totalPurchases) as number) : 0;
 };
 
 export const addToTotalPurchases = (amount: number) => {
@@ -74,7 +69,12 @@ export const addToTotalPurchases = (amount: number) => {
   }
   const currentTotalPurchases = getTotalPurchases();
   const newTotalPurchases = currentTotalPurchases + amount;
-  localStorage.setItem("totalPurchases", newTotalPurchases);
+  localStorage.setItem("totalPurchases", newTotalPurchases.toString());
+};
+
+export const getAmountOfDockerfiles = () => {
+  const dockerFiles = localStorage.getItem("dockerfiles");
+  return dockerFiles ? (JSON.parse(dockerFiles) as number) : 0;
 };
 
 export const purchaseDockerfile = (amount: number) => {
@@ -103,7 +103,7 @@ export const purchaseDockerfile = (amount: number) => {
 
 export const getAmountOfDockerRunCommands = () => {
   const dockerRunCommands = localStorage.getItem("dockerRunCommands");
-  return dockerRunCommands ? JSON.parse(dockerRunCommands) : 0;
+  return dockerRunCommands ? (JSON.parse(dockerRunCommands) as number) : 0;
 };
 
 export const purchaseDockerRunCommand = (amount: number) => {
@@ -134,7 +134,7 @@ export const purchaseDockerRunCommand = (amount: number) => {
 
 export const getAmountOfDockerComposeFiles = () => {
   const dockerComposeFiles = localStorage.getItem("dockerComposeFiles");
-  return dockerComposeFiles ? JSON.parse(dockerComposeFiles) : 0;
+  return dockerComposeFiles ? (JSON.parse(dockerComposeFiles) as number) : 0;
 };
 
 export const purchaseDockerComposeFile = (amount: number) => {
@@ -163,7 +163,7 @@ export const purchaseDockerComposeFile = (amount: number) => {
 
 export const getContainersPerSecond = () => {
   const containersPerSecond = localStorage.getItem("containersPerSecond");
-  return containersPerSecond ? JSON.parse(containersPerSecond) : 0;
+  return containersPerSecond ? (JSON.parse(containersPerSecond) as number) : 0;
 };
 
 const increaseContainersPerSecond = (amount: number) => {
@@ -183,7 +183,7 @@ export const tickContainersPerSecond = () => {
 
 export const getAmountOfRaspberryPiZero2Ws = () => {
   const raspberryPiZero2Ws = localStorage.getItem("raspberryPiZero2Ws");
-  return raspberryPiZero2Ws ? JSON.parse(raspberryPiZero2Ws) : 0;
+  return raspberryPiZero2Ws ? (JSON.parse(raspberryPiZero2Ws) as number) : 0;
 };
 
 export const purchaseRaspberryPiZero2W = (amount: number) => {
@@ -214,7 +214,7 @@ export const purchaseRaspberryPiZero2W = (amount: number) => {
 
 export const getAmountOfRaspberryPi4s = () => {
   const raspberryPi4s = localStorage.getItem("raspberryPi4s");
-  return raspberryPi4s ? JSON.parse(raspberryPi4s) : 0;
+  return raspberryPi4s ? (JSON.parse(raspberryPi4s) as number) : 0;
 };
 
 export const purchaseRaspberryPi4 = (amount: number) => {
@@ -243,7 +243,7 @@ export const purchaseRaspberryPi4 = (amount: number) => {
 
 export const getAmountOfZimaBoards = () => {
   const zimaBoards = localStorage.getItem("zimaBoards");
-  return zimaBoards ? JSON.parse(zimaBoards) : 0;
+  return zimaBoards ? (JSON.parse(zimaBoards) as number) : 0;
 };
 
 export const purchaseZimaBoard = (amount: number) => {
@@ -272,7 +272,7 @@ export const purchaseZimaBoard = (amount: number) => {
 
 export const getAmountOfDockerSwarms = () => {
   const dockerSwarms = localStorage.getItem("dockerSwarms");
-  return dockerSwarms ? JSON.parse(dockerSwarms) : 0;
+  return dockerSwarms ? (JSON.parse(dockerSwarms) as number) : 0;
 };
 
 export const purchaseDockerSwarm = (amount: number) => {
@@ -297,4 +297,41 @@ export const purchaseDockerSwarm = (amount: number) => {
   increaseContainersPerSecond(amount * 500);
   addToTotalPurchases(amount);
   return { success: true };
+};
+
+export const getRedeemedQuestIds = () => {
+  const redeemedQuestIds = localStorage.getItem("redeemedQuestIds");
+  return redeemedQuestIds ? (JSON.parse(redeemedQuestIds) as number[]) : [];
+};
+
+export const redeemQuest = (quest: {
+  id: number;
+  name: string;
+  description: string;
+  reward: number;
+  target: string;
+  targetValue: number;
+}) => {
+  const redeemedQuestIds = getRedeemedQuestIds();
+  if (redeemedQuestIds.includes(quest.id)) {
+    return;
+  }
+  const targetMap = {
+    clicks: () => getClicks(),
+    purchases: () => getTotalPurchases(),
+    containers: () => getContainers(),
+    totalContainers: () => getTotalContainers(),
+  };
+  const target =
+    targetMap[
+      quest.target as "clicks" | "purchases" | "containers" | "totalContainers"
+    ]();
+  if (target < quest.targetValue) {
+    return;
+  }
+  updateContainers(quest.reward);
+  localStorage.setItem(
+    "redeemedQuestIds",
+    JSON.stringify(redeemedQuestIds.concat([quest.id]))
+  );
 };

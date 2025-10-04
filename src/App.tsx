@@ -10,6 +10,7 @@ import {
   purchaseRaspberryPi4,
   purchaseZimaBoard,
   purchaseDockerSwarm,
+  redeemQuest,
 } from "./utils/containerManager";
 import questsData from "./data/quests.json";
 import Overlay from "./components/Overlay";
@@ -32,6 +33,7 @@ function App() {
     raspberryPi4s,
     zimaBoards,
     dockerSwarms,
+    redeemedQuestIds,
     refreshValues,
   } = useContainer();
   const [clicked, setClicked] = useState(false);
@@ -411,6 +413,7 @@ function App() {
               {menu === "quests" && (
                 <div className="flex flex-col w-full h-full items-center overflow-y-auto">
                   {quests.map((quest) => {
+                    if (redeemedQuestIds.includes(quest.id)) return;
                     const targetMap = {
                       clicks: clicks,
                       purchases: totalPurchases,
@@ -425,6 +428,7 @@ function App() {
                           | "containers"
                           | "totalContainers"
                       ];
+                    const canRedeem = !(target < quest.targetValue);
                     return (
                       <div className="flex flex-col w-11/12 items-center bg-primary-a2 p-2 rounded-lg mt-1 mb-1">
                         <h3 className="text-lg font-bold text-center">
@@ -447,6 +451,17 @@ function App() {
                             {`${target}/${quest.targetValue}`}
                           </div>
                         </div>
+                        {canRedeem && (
+                          <button
+                            className="text-lg hover:text-xl"
+                            onClick={() => {
+                              redeemQuest(quest);
+                              refreshValues();
+                            }}
+                          >
+                            Claim
+                          </button>
+                        )}
                       </div>
                     );
                   })}
