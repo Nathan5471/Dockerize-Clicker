@@ -14,4 +14,4 @@ Sticker made by [Candy](https://slack.com/app_redirect?channel=U082PKSD15L) from
 
 ## Deployment
 
-This project is deployed on [Vercel](https://vercel.com/). You can check it out <https://add.link.here>.
+This project is deployed on [Vercel](https://vercel.com/). You can check it out <https://dockerize-clicker.vercel.app/>.
