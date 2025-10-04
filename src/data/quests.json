@@ -1,68 +1,68 @@
 {
-    "quests": [
-        {
-            "id": 1,
-            "name": "Just Beginning",
-            "description": "Get your first 100 clicks",
-            "reward": 100,
-            "target": "clicks",
-            "targetValue": 100
-        },
-        {
-            "id": 2,
-            "name": "Get Buying",
-            "description": "Make your first purchase",
-            "reward": 250,
-            "target": "purchases",
-            "targetValue": 1
-        },
-        {
-            "id": 3,
-            "name": "Containerized",
-            "description": "Have 1000 containers",
-            "reward": 500,
-            "target": "containers",
-            "targetValue": 1000
-        },
-        {
-            "id": 4,
-            "name": "Docker Pro",
-            "description": "Have 5000 containers in all time",
-            "reward": 500,
-            "target": "totalContainers",
-            "targetValue": 5000
-        },
-        {
-            "id": 5,
-            "name": "Spending Frenzy",
-            "description": "Make 25 purchases",
-            "reward": 750,
-            "target": "purchases",
-            "targetValue": 25
-        },
-        {
-            "id": 6,
-            "name": "Docker Master",
-            "description": "Have 25000 containers in all time",
-            "reward": 750,
-            "target": "totalContainers",
-            "targetValue": 25000
-        },
-        {
-            "id": 7,
-            "name": "Dockerized",
-            "description": "Have 15000 containers",
-            "reward": 1500,
-            "target": "containers",
-            "targetValue": 15000
-        },
-        {
-            "id": 8,
-            "name": "Clicking Pro",
-            "description": "Click 1000 times",
-            "reward": 1000,
-            "target": "clicks",
-            "targetValue": 1000
-        }
-    ]
+  "quests": [
+    {
+      "id": 1,
+      "name": "Just Beginning",
+      "description": "Get your first 100 clicks",
+      "reward": 100,
+      "target": "clicks",
+      "targetValue": 100
+    },
+    {
+      "id": 2,
+      "name": "Get Buying",
+      "description": "Make your first purchase",
+      "reward": 250,
+      "target": "purchases",
+      "targetValue": 1
+    },
+    {
+      "id": 3,
+      "name": "Containerized",
+      "description": "Have 1000 containers",
+      "reward": 500,
+      "target": "containers",
+      "targetValue": 1000
+    },
+    {
+      "id": 4,
+      "name": "Docker Pro",
+      "description": "Have 5000 containers in all time",
+      "reward": 500,
+      "target": "totalContainers",
+      "targetValue": 5000
+    },
+    {
+      "id": 5,
+      "name": "Spending Frenzy",
+      "description": "Make 25 purchases",
+      "reward": 750,
+      "target": "purchases",
+      "targetValue": 25
+    },
+    {
+      "id": 6,
+      "name": "Docker Master",
+      "description": "Have 25000 containers in all time",
+      "reward": 750,
+      "target": "totalContainers",
+      "targetValue": 25000
+    },
+    {
+      "id": 7,
+      "name": "Dockerized",
+      "description": "Have 15000 containers",
+      "reward": 1500,
+      "target": "containers",
+      "targetValue": 15000
+    },
+    {
+      "id": 8,
+      "name": "Clicking Pro",
+      "description": "Click 1000 times",
+      "reward": 1000,
+      "target": "clicks",
+      "targetValue": 1000
+    }
+  ]
 }

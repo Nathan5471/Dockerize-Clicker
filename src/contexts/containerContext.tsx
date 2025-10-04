@@ -5,17 +5,24 @@ import {
   getClicks,
   getAmountPerClick,
   getTotalPurchases,
-  getAmountOfDockerfiles,
-  getAmountOfDockerRunCommands,
-  getAmountOfDockerComposeFiles,
   getContainersPerSecond,
   tickContainersPerSecond,
-  getAmountOfRaspberryPiZero2Ws,
-  getAmountOfRaspberryPi4s,
-  getAmountOfZimaBoards,
-  getAmountOfDockerSwarms,
   getRedeemedQuestIds,
+  getAmountPurchasedOfItem,
 } from "../utils/containerManager";
+import shopData from "../data/shop.json";
+
+interface ShopItem {
+  id: number;
+  name: string;
+  displayName: string;
+  description: string;
+  baseCost: number;
+  scaleFactor: number;
+  effect: string;
+  effectAmount: number;
+  amountPurchased: number;
+}
 
 interface ContainerContextType {
   containers: number;
@@ -24,13 +31,7 @@ interface ContainerContextType {
   containersPerClick: number;
   containersPerSecond: number;
   totalPurchases: number;
-  dockerfiles: number;
-  dockerRunCommands: number;
-  dockerComposeFiles: number;
-  raspberryPiZero2Ws: number;
-  raspberryPi4s: number;
-  zimaBoards: number;
-  dockerSwarms: number;
+  shopItems: ShopItem[];
   redeemedQuestIds: number[];
   refreshValues: () => void;
 }
@@ -42,6 +43,7 @@ const ContainerContext = createContext<ContainerContextType | undefined>(
 export const ContainerProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
+  const shopItemsData = shopData.items;
   const [containers, setContainers] = useState<number>(getContainers());
   const [totalContainers, setTotalContainers] = useState<number>(
     getTotalContainers()
@@ -56,25 +58,7 @@ export const ContainerProvider: React.FC<{ children: React.ReactNode }> = ({
   const [totalPurchases, setTotalPurchases] = useState<number>(
     getTotalPurchases()
   );
-  const [dockerfiles, setDockerfiles] = useState<number>(
-    getAmountOfDockerfiles()
-  );
-  const [dockerRunCommands, setDockerRunCommands] = useState<number>(
-    getAmountOfDockerRunCommands()
-  );
-  const [dockerComposeFiles, setDockerComposeFiles] = useState<number>(
-    getAmountOfDockerComposeFiles()
-  );
-  const [raspberryPiZero2Ws, setRaspberryPiZero2Ws] = useState<number>(
-    getAmountOfRaspberryPiZero2Ws()
-  );
-  const [raspberryPi4s, setRaspberryPi4s] = useState<number>(
-    getAmountOfRaspberryPi4s()
-  );
-  const [zimaBoards, setZimaBoards] = useState<number>(getAmountOfZimaBoards());
-  const [dockerSwarms, setDockerSwarms] = useState<number>(
-    getAmountOfDockerSwarms()
-  );
+  const [shopItems, setShopItems] = useState<ShopItem[]>([]);
   const [redeemedQuestIds, setRedeemedQuestIds] = useState<number[]>(
     getRedeemedQuestIds()
   );
@@ -86,7 +70,29 @@ export const ContainerProvider: React.FC<{ children: React.ReactNode }> = ({
     }, 1000);
 
     return () => clearInterval(interval);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const loadShopData = () => {
+    let shopData = [] as ShopItem[];
+    shopItemsData.forEach((item) => {
+      const amountPurchased = getAmountPurchasedOfItem(item);
+      shopData = shopData.concat([
+        {
+          id: item.id,
+          name: item.name,
+          displayName: item.displayName,
+          description: item.description,
+          baseCost: item.baseCost,
+          scaleFactor: item.scaleFactor,
+          effect: item.effect,
+          effectAmount: item.effectAmount,
+          amountPurchased,
+        },
+      ]);
+    });
+    setShopItems(shopData);
+  };
 
   const refreshValues = () => {
     setContainers(getContainers());
@@ -95,13 +101,7 @@ export const ContainerProvider: React.FC<{ children: React.ReactNode }> = ({
     setContainersPerClick(getAmountPerClick());
     setContainersPerSecond(getContainersPerSecond());
     setTotalPurchases(getTotalPurchases());
-    setDockerfiles(getAmountOfDockerfiles());
-    setDockerRunCommands(getAmountOfDockerRunCommands());
-    setDockerComposeFiles(getAmountOfDockerComposeFiles());
-    setRaspberryPiZero2Ws(getAmountOfRaspberryPiZero2Ws());
-    setRaspberryPi4s(getAmountOfRaspberryPi4s());
-    setZimaBoards(getAmountOfZimaBoards());
-    setDockerSwarms(getAmountOfDockerSwarms());
+    loadShopData();
     setRedeemedQuestIds(getRedeemedQuestIds());
   };
 
@@ -112,13 +112,7 @@ export const ContainerProvider: React.FC<{ children: React.ReactNode }> = ({
     containersPerClick,
     containersPerSecond,
     totalPurchases,
-    dockerfiles,
-    dockerRunCommands,
-    dockerComposeFiles,
-    raspberryPiZero2Ws,
-    raspberryPi4s,
-    zimaBoards,
-    dockerSwarms,
+    shopItems,
     redeemedQuestIds,
     refreshValues,
   };

@@ -1,0 +1,74 @@
+{
+  "items": [
+    {
+      "id": 1,
+      "name": "dockerfile",
+      "displayName": "dockerfile",
+      "description": "You can't make a container without a Dockerfile! Get 1 more contianer per click.",
+      "baseCost": 25,
+      "scaleFactor": 1.15,
+      "effect": "perClick",
+      "effectAmount": 1
+    },
+    {
+      "id": 2,
+      "name": "dockerRunCommand",
+      "displayName": "Docker Run Command",
+      "description": "A Docker Run command lets you run a single container easily. Get 5 more containers per click.",
+      "baseCost": 100,
+      "scaleFactor": 1.15,
+      "effect": "perClick",
+      "effectAmount": 5
+    },
+    {
+      "id": 3,
+      "name": "dockerComposeFile",
+      "displayName": "Docker Compose File",
+      "description": "A Docker Compose file helps you manage multi-container deployments. Get 30 more containers per click",
+      "baseCost": 750,
+      "scaleFactor": 1.2,
+      "effect": "perClick",
+      "effectAmount": 30
+    },
+    {
+      "id": 4,
+      "name": "raspberryPiZero2W",
+      "displayName": "Raspberry Pi Zero 2W",
+      "description": "The Raspberry Pi Zero 2W is a tiny, and extremely affordable (only $15!) computer that you can use to run Docker. Get 20 containers per second.",
+      "baseCost": 5000,
+      "scaleFactor": 1.25,
+      "effect": "perSecond",
+      "effectAmount": 20
+    },
+    {
+      "id": 5,
+      "name": "raspberryPi4",
+      "displayName": "Raspberry Pi 4",
+      "description": "The Raspberry Pi 4 is a powerful single board computer (sbc) that can be great as a home server. Get 150 containers per second.",
+      "baseCost": 30000,
+      "scaleFactor": 1.3,
+      "effect": "perSecond",
+      "effectAmount": 150
+    },
+    {
+      "id": 6,
+      "name": "zimaBoard",
+      "displayName": "ZimaBoard",
+      "description": "The ZimaBoard is another SBC that is designed to be a home server. It was meant to be the prize for Dockerize, but it was sold out during fulfilment. Get 400 containers per second.",
+      "baseCost": 75000,
+      "scaleFactor": 1.3,
+      "effect": "perSecond",
+      "effectAmount": 400
+    },
+    {
+      "id": 7,
+      "name": "dockerSwarm",
+      "displayName": "Docker Swarm",
+      "description": "Docker Swarm is a system for managing clusters of machines to deploy containers. Get 500 more containers per click.",
+      "baseCost": 100000,
+      "scaleFactor": 1.35,
+      "effect": "perClick",
+      "effectAmount": 500
+    }
+  ]
+}
