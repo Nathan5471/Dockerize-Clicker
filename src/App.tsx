@@ -410,17 +410,46 @@ function App() {
               )}
               {menu === "quests" && (
                 <div className="flex flex-col w-full h-full items-center overflow-y-auto">
-                  {quests.map((quest) => (
-                    <div className="w-11/12 bg-primary-a2 p-2 rounded-lg mt-1 mb-1">
-                      <h3 className="text-lg font-bold text-center">
-                        {quest.name}
-                      </h3>
-                      <p className="text-left">{quest.description}</p>
-                      <p className="text-left font-bold">
-                        Reward: {quest.reward} Containers
-                      </p>
-                    </div>
-                  ))}
+                  {quests.map((quest) => {
+                    const targetMap = {
+                      clicks: clicks,
+                      purchases: totalPurchases,
+                      containers: containers,
+                      totalContainers: totalContainers,
+                    };
+                    const target =
+                      targetMap[
+                        quest.target as
+                          | "clicks"
+                          | "purchases"
+                          | "containers"
+                          | "totalContainers"
+                      ];
+                    return (
+                      <div className="flex flex-col w-11/12 items-center bg-primary-a2 p-2 rounded-lg mt-1 mb-1">
+                        <h3 className="text-lg font-bold text-center">
+                          {quest.name}
+                        </h3>
+                        <p className="text-left w-full">{quest.description}</p>
+                        <p className="text-left font-bold w-full">
+                          Reward: {quest.reward} Containers
+                        </p>
+                        <div className="w-5/6 bg-primary-a0 h-6 rounded-lg">
+                          <div
+                            className={`bg-text h-full text-primary-a2 font-bold justify-center text-sm text-center transition-all duration-300 rounded-lg`}
+                            style={{
+                              width: `${Math.min(
+                                Math.floor((target / quest.targetValue) * 100),
+                                100
+                              )}%`,
+                            }}
+                          >
+                            {`${target}/${quest.targetValue}`}
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
                 </div>
               )}
             </div>
